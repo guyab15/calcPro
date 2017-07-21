@@ -1,4 +1,5 @@
 <html>
+<meta charset="ISO-8859-1">
 <head></head>
 <body>
 <h3>Simple Calculator</h3>
@@ -53,13 +54,26 @@
 </form>
 
 <script type="text/javascript">
-
+function fixDevid(s){
+	var t = "";
+	for(var i=0;i<s.length;i++){
+		
+		   if(s.substr(i,1) == '/'){
+			t+='&';
+		   }else{
+			   t+=s.substr(i,1);
+		   }
+		   
+	   }
+	 
+	   return t;
+}
 function doSomething(){
-	
+console.log(document.getElementById("btnn").value);	
 var url = "http://localhost:8080/calc/webapi/mycalc/qus/";
 myReq = new XMLHttpRequest();
 
-var myParam = document.getElementById("btnn").value;
+var myParam = fixDevid(document.getElementById("btnn").value);
 myReq.onreadystatechange = function() {
 	if(this.readyState == 4 && this.status == 200){
 		//calc.display.value= myReq.responseText;
@@ -68,6 +82,7 @@ myReq.onreadystatechange = function() {
 	}
 };
 myReq.open("GET",url+myParam,true);
+console.log(myReq);
 myReq.send();
 }
 </script>
