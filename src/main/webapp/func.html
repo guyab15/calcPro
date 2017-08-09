@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+<canvas id="myCanvas" width = document.body.clientWidth; height = screen.height ></canvas>
+
+<script type="text/javascript">
+var c = document.getElementById("myCanvas");
+c.width = window.innerWidth;
+c.height = window.innerHeight;
+var ctx = c.getContext("2d");
+ctx.font = "10px Arial";
+ctx.strokeText("0",c.width/2-15,c.height/2+15);
+
+ctx.beginPath();
+ctx.lineWidth = 3;
+ctx.moveTo(c.width/2,0);
+ctx.lineTo(c.width/2,c.height);
+ctx.stroke();
+
+ctx.moveTo(0,c.height/2);
+ctx.lineTo(c.width,c.height/2);
+ctx.stroke();
+var ratio = 30;
+var scale = 3;
+
+ctx.beginPath();
+ctx.lineWidth = 1;
+ctx.strokeStyle = '#A9A9A9';
+
+//line y under the 0 
+var counter = 0;
+var counterScale = 0;
+for (var i = c.height/2; i<= c.height; i+=ratio) {
+	
+	ctx.moveTo(0,i);
+	ctx.lineTo(c.width,i);
+	if (counter%5==0 ) {
+		ctx.strokeStyle = '#000000';
+		if(counter!=0){
+			counterScale-=scale;
+			ctx.strokeText(counterScale,c.width/2-15,i+4);
+		}
+	}
+	ctx.stroke();
+	ctx.beginPath();
+	ctx.strokeStyle = '#A9A9A9';
+	counter++;
+
+}
+//line y above the 0
+counter =0;
+counterScale = 0;
+for (var i = c.height/2; i>= 0; i-=ratio) {
+	ctx.moveTo(0,i);
+	ctx.lineTo(c.width,i);
+	if (counter%5==0) {
+		ctx.strokeStyle = '#000000';
+		if(counter!=0){
+			counterScale+=scale;
+			ctx.strokeText(counterScale,c.width/2-15,i+4);
+		}
+	}
+	ctx.stroke();
+	ctx.beginPath();
+	ctx.strokeStyle = '#A9A9A9';
+	counter++;
+
+}
+//line x after the 0
+counter =0;
+counterScale = 0;
+for (var i = c.width/2; i<= c.width; i+=ratio) {
+	ctx.moveTo(i,0);
+	ctx.lineTo(i,c.height);
+	if (counter%5==0) {
+		ctx.strokeStyle = '#000000';
+		if(counter!=0){
+			counterScale+=scale;
+			ctx.strokeText(counterScale,i-4,c.height/2+15);
+		}
+	}
+	ctx.stroke();
+	ctx.beginPath();
+	ctx.strokeStyle = '#A9A9A9';
+	counter++;
+
+
+}
+
+//line x Behind the 0
+counter =0;
+counterScale = 0;
+for (var i = c.width/2; i>=0; i-=ratio) {
+	ctx.moveTo(i,0);
+	ctx.lineTo(i,c.height);
+	if (counter%5==0 ) {
+		ctx.strokeStyle = '#000000';
+		if(counter!=0){
+			counterScale-=scale;
+			ctx.strokeText(counterScale,i-4,c.height/2+15);
+		}
+	}
+	ctx.stroke();
+	ctx.beginPath();
+	ctx.strokeStyle = '#A9A9A9';
+	counter++;
+
+
+}
+
+
+
+var points = new Map();
+var value = new Object();
+var Coordinates = "";
+
+	
+console.log("start");		
+var x =0;
+var y =0;
+for (var i = c.width/2; i<= c.width; i+=ratio*5) {
+	for(var j = c.height/2; j<=c.height; j+=ratio*5){
+		value = new Object();
+		console.log("x="+x+" y="+y);
+		console.log(i+","+j);
+		value.x = i;
+		value.y = j;
+		
+		Coordinates = x+","+y;
+		
+		points.set(Coordinates,value);	
+		console.log(points.get(Coordinates));
+		y++;	
+	}
+	y=0;
+	x++;		
+}
+console.log("start");
+x=0;
+y=0;
+for (var i = c.width/2; i>= 0; i-=ratio*5) {
+	for(var j = c.height/2; j>=0; j-=ratio*5){
+		console.log("x="+x+" y="+y);
+		console.log(i+","+j);
+		value = new Object();
+		value.x = i;
+		value.y = j;
+		Coordinates = x+","+y;
+		points.set(Coordinates,value);
+		console.log(points.get(Coordinates));	
+		y--;	
+	}
+	y=0;
+	x--;		
+}
+console.log("start");
+x=0;
+y=0;
+for (var i = c.width/2; i>= 0; i-=ratio*5) {
+	for(var j = c.height/2; j<=c.height; j+=ratio*5){
+		console.log("x="+x+" y="+y);
+		console.log(i+","+j);
+		value = new Object();
+		value.x = i;
+		value.y = j;
+		Coordinates = x+","+y;
+		points.set(Coordinates,value);
+		console.log(points.get(Coordinates));	
+		y++;	
+	}
+	y=0;
+	x--;		
+}
+console.log("start");
+x=0;
+y=0;
+for (var i = c.width/2; i<= c.width; i+=ratio*5) {
+	for(var j = c.height/2; j>=0; j-=ratio*5){
+		console.log("x="+x+" y="+y);
+		console.log(i+","+j);
+		value = new Object();
+		value.x = i;
+		value.y = j;
+		Coordinates = x+","+y;
+		points.set(Coordinates,value);	
+		console.log(points.get(Coordinates));
+		y--;	
+	}
+	y=0;
+	x++;		
+}
+// console.log("start");
+// for(var i=-4;i<5;i++){
+// 	for(var j=-1;j<2;j++){
+// 		s = i+","+j;
+// 		console.log(s);
+// 		console.log(points.get(s));
+// 	}
+// }
+
+ctx.beginPath();
+ctx.strokeStyle = '#80ff00';
+
+ctx.moveTo(points.get("-7,3").x,points.get("-7,3").y);
+ctx.lineTo(points.get("6,-3").x,points.get("6,-3").y);
+ctx.moveTo(10,10);
+ctx.lineTo(100,100);
+ctx.stroke();
+
+
+
+</script>
+</body>
+</html>
